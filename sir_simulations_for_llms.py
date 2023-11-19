@@ -191,7 +191,7 @@ def run_and_save_sir_model(graph_func, graph_name, run_number, graph_args=[], be
 
 # List of graph functions, their names, and specific arguments
 graphs = [
-    (connSW, "connSW", [1000, 0.1]),  # connSW requires the number of nodes and beta value
+    (connSW, "connSW", [0.1]),  # random size
     (BA, "BA", []),
     (ER, "ER", []),
     (CiteSeer, "CiteSeer", []),
