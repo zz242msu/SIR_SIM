@@ -148,6 +148,7 @@ def coms():
 # Function to run SIR model and save graph
 def run_and_save_sir_model(graph_func, graph_name, run_number, graph_args=[], beta=0.1, gamma=0.01, seed=42, steps=10):
     G, config = graph_func(*graph_args)
+    graph_size = len(G)  # Get the size of the graph
 
     # Model selection
     model = ep.SIRModel(G)
