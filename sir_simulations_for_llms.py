@@ -168,9 +168,10 @@ def run_and_save_sir_model(graph_func, graph_name, run_number, graph_args=[], be
     # Simulation execution
     iterations = model.iteration_bunch(steps)
 
-    # Write iterations to a file, only record infected_nodes
-    with open(f'infected_nodes_{graph_name}_run{run_number}.txt', 'w') as file:
-        file.write(f"{graph_name} run {run_number} - Infected nodes:\n")
+    # Write iterations to a file. Only record infected_nodes
+    # Update file saving to include graph size in the filename
+    with open(f'infected_nodes_{graph_name}_{graph_size}_run{run_number}.txt', 'w') as file:
+        file.write(f"{graph_name} size {graph_size} run {run_number} - Infected nodes:\n")
         infected_nodes = [n for n in G.nodes if G.nodes[n]['status'] == 1]
         file.write(str(infected_nodes) + "\n")
 
