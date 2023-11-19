@@ -8,10 +8,15 @@ import torch_geometric.datasets as ds
 import random
 from torch_geometric.datasets import Planetoid
 
-def connSW(n=None, beta=None):
-    if n is None:
-        n = random.randint(1000, 1500)  # Randomize size between 1000 and 1500
-    g = nx.connected_watts_strogatz_graph(n, 10, 0.1)
+def connSW(beta=None):
+    n = random.randint(1000, 1500)  # Randomize size between 1000 and 1500
+    k = 10  # Number of nearest neighbors in the ring topology
+
+    # Ensure n is greater than k
+    if n <= k:
+        n = k + 1
+
+    g = nx.connected_watts_strogatz_graph(n, k, 0.1)
 
     config = mc.Configuration()
 
@@ -193,7 +198,7 @@ def run_and_save_sir_model(graph_func, graph_name, run_number, graph_args=[], be
 
 # List of graph functions, their names, and specific arguments
 graphs = [
-    (connSW, "connSW", [0.1]),  # random size
+    (connSW, "connSW", []),  # random size
     (BA, "BA", []),
     (ER, "ER", []),
     (CiteSeer, "CiteSeer", []),
