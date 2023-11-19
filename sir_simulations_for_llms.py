@@ -146,7 +146,7 @@ def coms():
     return g, config
 
 # Function to run SIR model and save graph
-def run_and_save_sir_model(graph_func, graph_name, run_number, graph_args=[], beta=0.1, gamma=0.01, fraction_infected=0.1, steps=10):
+def run_and_save_sir_model(graph_func, graph_name, run_number, graph_args=[], beta=0.1, gamma=0.01, seed=42, steps=10):
     G, config = graph_func(*graph_args)
 
     # Model selection
@@ -156,7 +156,12 @@ def run_and_save_sir_model(graph_func, graph_name, run_number, graph_args=[], be
     config = mc.Configuration()
     config.add_model_parameter('beta', beta)
     config.add_model_parameter('gamma', gamma)
-    config.add_model_parameter("fraction_infected", fraction_infected)
+
+    # Set the initial infected node
+    random.seed(seed)
+    initial_infected = random.choice([n for n, d in G.degree() if d == max(dict(G.degree()).values())])
+    config.add_model_initial_configuration("Infected", [initial_infected])
+    
     model.set_initial_status(config)
 
     # Simulation execution
