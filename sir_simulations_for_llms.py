@@ -182,6 +182,13 @@ def run_and_save_sir_model(graph_func, graph_name, run_number, graph_args=[], be
     # Simulation execution
     iterations = model.iteration_bunch(steps)
 
+    # Write only infected nodes at each iteration to a file
+    with open(f'infected_nodes_{graph_name}_run{run_number}.txt', 'w') as file:
+        file.write(f"{graph_name} run {run_number} - Infected nodes per iteration:\n")
+        for iteration in iterations:
+            infected_nodes = [node for node, status in iteration['status'].items() if status == 1]
+            file.write(f"Iteration {iteration['iteration']} - Infected nodes: {infected_nodes}\n")
+
     # Write iterations to a file
     with open(f'iterations_{graph_name}_run{run_number}.txt', 'w') as file:
         file.write(f"{graph_name} iterations:\n")
