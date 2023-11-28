@@ -205,7 +205,7 @@ def coms():
 
     return g, config
 
-def run_and_save_sir_model(graph_func, graph_name, run_number, graph_args=[], beta=0.2, gamma=0.25, steps=10):
+def run_and_save_sir_model(graph_func, graph_name, run_number, graph_args=[], beta=0.2, gamma=0.25, steps=16):
     G, config = graph_func(*graph_args)
     # toJSON(G, graph_name, run_number)
     # toAdjMatrix(G, graph_name, run_number)
