@@ -248,6 +248,24 @@ def run_and_save_sir_model(graph_func, graph_name, run_number, graph_args=[], be
     for i, node_status in model.status.items():
         G.nodes[i]['status'] = node_status
 
+    # draw graphs for all iterations
+    for iteration in iterations:
+    # Update the graph with the status from this iteration
+    for i, node_status in model.status.items():
+        G.nodes[i]['status'] = node_status
+
+    # Node colors based on status
+    status_colors = {0: 'green', 1: 'red', 2: 'blue'}
+    colors = [status_colors[node[1]['status']] for node in G.nodes(data=True)]
+
+    # Draw the graph
+    pos = nx.spring_layout(G)
+    nx.draw(G, pos, node_color=colors, with_labels=False, node_size=20)
+
+    # Save the plot with run number and iteration in the filename
+    plt.savefig(f'graph_infected_state_{graph_name}_run{run_number}_iteration{iteration["iteration"]}.png', format='PNG')
+    plt.close()
+
     # Node colors based on status
     status_colors = {0: 'green', 1: 'red', 2: 'blue'}
     colors = [status_colors[node[1]['status']] for node in G.nodes(data=True)]
