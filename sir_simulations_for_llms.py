@@ -68,7 +68,7 @@ def connSW(beta=None):
 
     config = mc.Configuration()
 
-    for a, b in g.edges():
+    for a, b in G.edges():
         weight = random.randrange(40, 80)
         weight = round(weight / 100, 2)
         if beta:
