@@ -232,21 +232,36 @@ def run_and_save_sir_model(graph_func, graph_name, run_number, graph_args=[], be
     iterations = model.iteration_bunch(steps)
 
     # Write only infected nodes at each iteration to a file
+    # with open(f'infected_nodes_{graph_name}_run{run_number}.txt', 'w') as file:
+    #     file.write(f"{graph_name} run {run_number} - Infected nodes per iteration:\n")
+    #     for iteration in iterations:
+    #         infected_nodes = [node for node, status in iteration['status'].items() if status == 1]
+    #         file.write(f"Iteration {iteration['iteration']} - Infected nodes: {infected_nodes}\n")
+
+    # Initialize a set to keep track of currently infected nodes
+    currently_infected_nodes = set()
+    
+    # Write currently infected nodes at each iteration to a file
     with open(f'infected_nodes_{graph_name}_run{run_number}.txt', 'w') as file:
         file.write(f"{graph_name} run {run_number} - Infected nodes per iteration:\n")
+        
         for iteration in iterations:
-            infected_nodes = [node for node, status in iteration['status'].items() if status == 1]
-            file.write(f"Iteration {iteration['iteration']} - Infected nodes: {infected_nodes}\n")
+            # Update the set of currently infected nodes
+            for node, status in iteration['status'].items():
+                if status == 1:  # If node is infected
+                    currently_infected_nodes.add(node)
+                elif node in currently_infected_nodes and status != 1:  # If node was infected but now is not
+                    currently_infected_nodes.remove(node)
+    
+            # Write the set of currently infected nodes to the file
+            file.write(f"Iteration {iteration['iteration']} - Infected nodes: {sorted(currently_infected_nodes)}\n")
+
 
     # Write iterations to a file
     with open(f'iterations_{graph_name}_run{run_number}.txt', 'w') as file:
         file.write(f"{graph_name} iterations:\n")
         for iteration in iterations:
             file.write(str(iteration) + "\n")
-
-    # # Update the graph with the status from the last iteration
-    # for i, node_status in model.status.items():
-    #     G.nodes[i]['status'] = node_status
 
     # draw graphs for all iterations
     for iteration_index, iteration in enumerate(iterations):
