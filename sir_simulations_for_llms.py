@@ -262,7 +262,7 @@ def run_and_save_sir_model(graph_func, graph_name, run_number, graph_args=[], be
 
 # List of graph functions, their names, and specific arguments
 graphs = [
-    (connSW, "connSW", [0.3, 0.3, 16]),  # connSW requires beta; beta, gamma, steps 
+    (connSW, "connSW", [0.3]),  # connSW requires beta
     # (BA, "BA", []),
     # (ER, "ER", []),
     # (CiteSeer, "CiteSeer", []),
