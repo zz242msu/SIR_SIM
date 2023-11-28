@@ -23,10 +23,11 @@ from torch_geometric.datasets import Planetoid
 
 def connSW(beta=None):
     # Randomize size between 1000 and 1500
-    n = random.randint(1000, 1500)
+    n = random.randint(1000, 1500) # The number of nodes
     k = 10  # Number of nearest neighbors in the ring topology
+    p = 0.1 # The probability of rewiring each edge
 
-    g = nx.connected_watts_strogatz_graph(n, k, 0.1)
+    g = nx.connected_watts_strogatz_graph(n, k, p)
 
     config = mc.Configuration()
 
