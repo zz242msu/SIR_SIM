@@ -26,7 +26,7 @@ import numpy as np
 
 def toAdjMatrix(g):
     # Get adjacency matrix as a SciPy sparse matrix
-    adj_matrix_sparse = nx.adjacency_matrix(G)
+    adj_matrix_sparse = nx.adjacency_matrix(g)
 
     # Convert to a dense matrix (NumPy array)
     adj_matrix_dense = adj_matrix_sparse.todense()
