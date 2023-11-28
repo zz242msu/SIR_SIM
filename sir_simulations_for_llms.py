@@ -65,6 +65,7 @@ def toJSON(G, graph_name, run_number):
 
     
 def connSW(beta=None):
+    print('connSW beta',beta)
     # Randomize size between 1000 and 1500
     n = random.randint(1000, 1500) # The number of nodes
     k = 10  # Number of nearest neighbors in the ring topology
@@ -77,7 +78,6 @@ def connSW(beta=None):
     for a, b in G.edges():
         weight = random.randrange(40, 80)
         weight = round(weight / 100, 2)
-        print(beta)
         if beta:
             weight = beta
         G[a][b]['weight'] = weight
