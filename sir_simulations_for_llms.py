@@ -78,6 +78,7 @@ def connSW(beta=None):
 
     toJSON(G)
     toAdjMatrix(G)
+    toEdgeList(G)
     
     return G, config
 
