@@ -222,9 +222,16 @@ def run_and_save_sir_model(graph_func, graph_name, run_number, graph_args=[], be
 
     # Set the initial infected node using a fixed seed for consistency
     random.seed(42)  # Fixed seed
-    # Select the node with the highest degree
-    initial_infected = max(G, key=G.degree)
-    config.add_model_initial_configuration("Infected", [initial_infected])
+
+    # # Select the node with the highest degree
+    # initial_infected = max(G, key=G.degree)
+    # config.add_model_initial_configuration("Infected", [initial_infected])
+
+    # Calculate top 5% nodes by degree
+    top_5_percent = int(0.05 * G.number_of_nodes())
+    nodes_sorted_by_degree = sorted(G.degree, key=lambda x: x[1], reverse=True)
+    initial_infected = [node for node, degree in nodes_sorted_by_degree[:top_5_percent]]
+    config.add_model_initial_configuration("Infected", initial_infected)
 
     model.set_initial_status(config)
 
