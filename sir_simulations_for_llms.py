@@ -205,7 +205,7 @@ def coms():
 
     return g, config
 
-def run_and_save_sir_model(graph_func, graph_name, run_number, graph_args=[], beta=0.2, gamma=0.25, steps=16):
+def run_and_save_sir_model(graph_func, graph_name, run_number, graph_args=[], beta=0.1, gamma=0.1, steps=10):
     G, config = graph_func(*graph_args)
     # toJSON(G, graph_name, run_number)
     # toAdjMatrix(G, graph_name, run_number)
@@ -238,23 +238,53 @@ def run_and_save_sir_model(graph_func, graph_name, run_number, graph_args=[], be
     #         infected_nodes = [node for node, status in iteration['status'].items() if status == 1]
     #         file.write(f"Iteration {iteration['iteration']} - Infected nodes: {infected_nodes}\n")
 
-    # Initialize a set to keep track of currently infected nodes
-    currently_infected_nodes = set()
+    # # Initialize a set to keep track of currently infected nodes
+    # currently_infected_nodes = set()
     
-    # Write currently infected nodes at each iteration to a file
-    with open(f'infected_nodes_{graph_name}_run{run_number}.txt', 'w') as file:
-        file.write(f"{graph_name} run {run_number} - Infected nodes per iteration:\n")
+    # # Write currently infected nodes at each iteration to a file
+    # with open(f'infected_nodes_{graph_name}_run{run_number}.txt', 'w') as file:
+    #     file.write(f"{graph_name} run {run_number} - Infected nodes per iteration:\n")
+        
+    #     for iteration in iterations:
+    #         # Update the set of currently infected nodes
+    #         for node, status in iteration['status'].items():
+    #             if status == 1:  # If node is infected
+    #                 currently_infected_nodes.add(node)
+    #             elif node in currently_infected_nodes and status != 1:  # If node was infected but now is not
+    #                 currently_infected_nodes.remove(node)
+    
+    #         # Write the set of currently infected nodes to the file
+    #         file.write(f"Iteration {iteration['iteration']} - Infected nodes: {sorted(currently_infected_nodes)}\n")
+
+    # Define states for clarity (modify as per your model's definitions)
+    SUSCEPTIBLE = 0
+    INFECTED = 1
+    RECOVERED = 2
+
+    # Initialize a dictionary to keep track of each node's current state
+    current_node_states = {}
+
+    # Write node states at each iteration to a file
+    with open(f'node_states_{graph_name}_run{run_number}.txt', 'w') as file:
+        file.write(f"{graph_name} run {run_number} - Node states per iteration:\n")
         
         for iteration in iterations:
-            # Update the set of currently infected nodes
+            # Update the dictionary of node states
             for node, status in iteration['status'].items():
-                if status == 1:  # If node is infected
-                    currently_infected_nodes.add(node)
-                elif node in currently_infected_nodes and status != 1:  # If node was infected but now is not
-                    currently_infected_nodes.remove(node)
-    
-            # Write the set of currently infected nodes to the file
-            file.write(f"Iteration {iteration['iteration']} - Infected nodes: {sorted(currently_infected_nodes)}\n")
+                current_node_states[node] = status
+
+            # Prepare data for writing to file: summarizing node states
+            infected_nodes = [node for node, state in current_node_states.items() if state == INFECTED]
+            recovered_nodes = [node for node, state in current_node_states.items() if state == RECOVERED]
+            susceptible_nodes = [node for node, state in current_node_states.items() if state == SUSCEPTIBLE]
+
+            # Write the summary of node states to the file
+            file.write(f"Iteration {iteration['iteration']}:\n")
+            file.write(f"  Infected nodes: {sorted(infected_nodes)}\n")
+            file.write(f"  Recovered nodes: {sorted(recovered_nodes)}\n")
+            file.write(f"  Susceptible nodes: {sorted(susceptible_nodes)}\n\n")
+
+    # Note: Modify the SUSCEPTIBLE, INFECTED, RECOVERED constants according to your simulation's state definitions.
 
 
     # Write iterations to a file
@@ -299,4 +329,4 @@ graphs = [
 for graph_func, graph_name, graph_args in graphs:
     print('graph_args', graph_args)
     for run_number in range(0, 1):  # Run 20 times
-        run_and_save_sir_model(graph_func, graph_name, run_number, graph_args, 0.5, 0.6, 20) # beta, gamma, steps
+        run_and_save_sir_model(graph_func, graph_name, run_number, graph_args, 0.5, 0.3, 20) # beta, gamma, steps
