@@ -160,7 +160,7 @@ def coms():
 
     return g, config
 
-def run_and_save_sir_model(graph_func, graph_name, run_number, graph_args=[], beta=0.1, gamma=0.01, steps=10):
+def run_and_save_sir_model(graph_func, graph_name, run_number, graph_args=[], beta=0.1, gamma=0.1, steps=10):
     G, config = graph_func(*graph_args)
 
     # Model selection
@@ -214,13 +214,13 @@ def run_and_save_sir_model(graph_func, graph_name, run_number, graph_args=[], be
 # List of graph functions, their names, and specific arguments
 graphs = [
     (connSW, "connSW", [0.1]),  # connSW requires beta value
-    (BA, "BA", []),
-    (ER, "ER", []),
-    (CiteSeer, "CiteSeer", []),
-    (PubMed, "PubMed", []),
-    (Cora, "Cora", []),
-    (photo, "photo", []),
-    (coms, "coms", [])
+    # (BA, "BA", []),
+    # (ER, "ER", []),
+    # (CiteSeer, "CiteSeer", []),
+    # (PubMed, "PubMed", []),
+    # (Cora, "Cora", []),
+    # (photo, "photo", []),
+    # (coms, "coms", [])
 ]
 
 # Run and save for each graph type 20 times
