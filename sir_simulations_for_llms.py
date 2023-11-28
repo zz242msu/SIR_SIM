@@ -68,7 +68,7 @@ def connSW(beta=None):
     # Randomize size between 1000 and 1500
     n = random.randint(1000, 1500) # The number of nodes
     k = 10  # Number of nearest neighbors in the ring topology
-    p = 0.1 # The probability of rewiring each edge
+    p = 0.15 # The probability of rewiring each edge
 
     G = nx.connected_watts_strogatz_graph(n, k, p)
 
@@ -204,11 +204,12 @@ def coms():
 
     return g, config
 
-def run_and_save_sir_model(graph_func, graph_name, run_number, graph_args=[], beta=0.1, gamma=0.1, steps=10):
+def run_and_save_sir_model(graph_func, graph_name, run_number, graph_args=[], beta=0.2, gamma=0.25, steps=10):
     G, config = graph_func(*graph_args)
     toJSON(G, graph_name, run_number)
     toAdjMatrix(G, graph_name, run_number)
     toEdgeList(G, graph_name, run_number)
+    toWeightedEdgeList(G, graph_name, run_number)
 
     # Model selection
     model = ep.SIRModel(G)
@@ -260,7 +261,7 @@ def run_and_save_sir_model(graph_func, graph_name, run_number, graph_args=[], be
 
 # List of graph functions, their names, and specific arguments
 graphs = [
-    (connSW, "connSW", [0.1]),  # connSW requires beta value
+    (connSW, "connSW", [0.3]),  # connSW requires beta value
     # (BA, "BA", []),
     # (ER, "ER", []),
     # (CiteSeer, "CiteSeer", []),
