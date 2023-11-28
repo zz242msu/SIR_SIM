@@ -77,6 +77,7 @@ def connSW(beta=None):
     for a, b in G.edges():
         weight = random.randrange(40, 80)
         weight = round(weight / 100, 2)
+        print(beta)
         if beta:
             weight = beta
         G[a][b]['weight'] = weight
