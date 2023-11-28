@@ -24,11 +24,11 @@ import json
 from networkx.readwrite import json_graph
 import numpy as np
 
-def toEdgeList(G):
-    # Write to Edge List
-    nx.write_weighted_edgelist(G, "weighted_edge_list.txt")
+def toEdgeList(G, graph_name, run_number):
+    filename = f"weighted_edge_list_{graph_name}_run{run_number}.txt"
+    nx.write_weighted_edgelist(G, filename)
 
-def toAdjMatrix(G):
+def toAdjMatrix(G, graph_name, run_number):
     # Get adjacency matrix as a SciPy sparse matrix
     adj_matrix_sparse = nx.adjacency_matrix(G)
 
@@ -36,14 +36,15 @@ def toAdjMatrix(G):
     adj_matrix_dense = adj_matrix_sparse.todense()
 
     # Print the dense adjacency matrix
-    print(adj_matrix_dense)
+    # print(adj_matrix_dense)
 
-    # Optionally, save this to a file
-    with open('adjacency_matrix.txt', 'w') as f:
+    # Save this to a file
+    filename = f'adjacency_matrix_{graph_name}_run{run_number}.txt'
+    with open(filename, 'w') as f:
         np.savetxt(f, adj_matrix_dense, fmt='%d')
 
     
-def toJSON(G):
+def toJSON(G, graph_name, run_number):
     # Convert to JSON data
     data = json_graph.node_link_data(G)
     
@@ -51,10 +52,11 @@ def toJSON(G):
     json_data = json.dumps(data, indent=4)
     
     # Print JSON string
-    print(json_data)
+    # print(json_data)
     
-    # Or save to a file
-    with open('graph.json', 'w') as f:
+    # Save to a file
+    filename = f'graph_{graph_name}_run{run_number}.json'
+    with open(filename, 'w') as f:
         json.dump(data, f, indent=4)
 
     
@@ -75,10 +77,6 @@ def connSW(beta=None):
             weight = beta
         G[a][b]['weight'] = weight
         config.add_edge_configuration("threshold", (a, b), weight)
-
-    toJSON(G)
-    toAdjMatrix(G)
-    toEdgeList(G)
     
     return G, config
 
