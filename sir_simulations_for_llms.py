@@ -25,7 +25,7 @@ from networkx.readwrite import json_graph
 import numpy as np
 
 def toEdgeList(G, graph_name, run_number):
-    filename = f"weighted_edge_list_{graph_name}_run{run_number}.txt"
+    filename = f"edge_list_{graph_name}_run{run_number}.txt"
     nx.write_edgelist(G, filename)
     
 def toWeightedEdgeList(G, graph_name, run_number):
