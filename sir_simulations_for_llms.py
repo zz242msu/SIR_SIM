@@ -277,4 +277,4 @@ graphs = [
 for graph_func, graph_name, graph_args in graphs:
     print('graph_args', graph_args)
     for run_number in range(0, 1):  # Run 20 times
-        run_and_save_sir_model(graph_func, graph_name, run_number, graph_args)
+        run_and_save_sir_model(graph_func, graph_name, run_number, graph_args, 0.5, 0.6, 20) # beta, gamma, steps
