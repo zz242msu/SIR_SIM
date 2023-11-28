@@ -20,7 +20,24 @@ import matplotlib.pyplot as plt
 import torch_geometric.datasets as ds
 import random
 from torch_geometric.datasets import Planetoid
+import json
+from networkx.readwrite import json_graph
 
+def toJSON(g):
+    # Convert to JSON data
+    data = json_graph.node_link_data(g)
+    
+    # Convert JSON object to a string
+    json_data = json.dumps(data, indent=4)
+    
+    # Print JSON string
+    print(json_data)
+    
+    # Or save to a file
+    with open('graph.json', 'w') as f:
+        json.dump(data, f, indent=4)
+
+    
 def connSW(beta=None):
     # Randomize size between 1000 and 1500
     n = random.randint(1000, 1500) # The number of nodes
@@ -39,6 +56,8 @@ def connSW(beta=None):
         g[a][b]['weight'] = weight
         config.add_edge_configuration("threshold", (a, b), weight)
 
+    toJSON(g)
+    
     return g, config
 
 def BA():
