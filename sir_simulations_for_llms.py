@@ -65,7 +65,7 @@ def toJSON(G, graph_name, run_number):
 
     
 def connSW(beta=None):
-    print('connSW beta',beta)
+    print('connSW beta', beta)
     # Randomize size between 1000 and 1500
     n = random.randint(1000, 1500) # The number of nodes
     k = 10  # Number of nearest neighbors in the ring topology
@@ -262,7 +262,8 @@ def run_and_save_sir_model(graph_func, graph_name, run_number, graph_args=[], be
 
 # List of graph functions, their names, and specific arguments
 graphs = [
-    (connSW, "connSW", [0.3]),  # connSW requires beta
+    # (connSW, "connSW", [0.3]),  # connSW requires beta
+    (connSW, "connSW"),  # connSW requires beta
     # (BA, "BA", []),
     # (ER, "ER", []),
     # (CiteSeer, "CiteSeer", []),
