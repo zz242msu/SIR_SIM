@@ -22,7 +22,23 @@ import random
 from torch_geometric.datasets import Planetoid
 import json
 from networkx.readwrite import json_graph
+import numpy as np
 
+def toAdjMatrix(g):
+    # Get adjacency matrix as a SciPy sparse matrix
+    adj_matrix_sparse = nx.adjacency_matrix(G)
+
+    # Convert to a dense matrix (NumPy array)
+    adj_matrix_dense = adj_matrix_sparse.todense()
+
+    # Print the dense adjacency matrix
+    print(adj_matrix_dense)
+
+    # Optionally, save this to a file
+    with open('adjacency_matrix.txt', 'w') as f:
+        np.savetxt(f, adj_matrix_dense, fmt='%d')
+
+    
 def toJSON(g):
     # Convert to JSON data
     data = json_graph.node_link_data(g)
@@ -57,6 +73,7 @@ def connSW(beta=None):
         config.add_edge_configuration("threshold", (a, b), weight)
 
     toJSON(g)
+    toAdjMatrix(g)
     
     return g, config
 
