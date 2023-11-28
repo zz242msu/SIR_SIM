@@ -21,7 +21,7 @@ import torch_geometric.datasets as ds
 import random
 from torch_geometric.datasets import Planetoid
 
-def connSW(beta=0.1):
+def connSW(beta=None):
     # Randomize size between 1000 and 1500
     n = random.randint(1000, 1500)
     k = 10  # Number of nearest neighbors in the ring topology
