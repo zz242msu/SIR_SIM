@@ -202,6 +202,9 @@ def coms():
 
 def run_and_save_sir_model(graph_func, graph_name, run_number, graph_args=[], beta=0.1, gamma=0.1, steps=10):
     G, config = graph_func(*graph_args)
+    toJSON(G, graph_name, run_number)
+    toAdjMatrix(G, graph_name, run_number)
+    toEdgeList(G, graph_name, run_number)
 
     # Model selection
     model = ep.SIRModel(G)
