@@ -24,9 +24,13 @@ import json
 from networkx.readwrite import json_graph
 import numpy as np
 
-def toAdjMatrix(g):
+def toEdgeList(G):
+    # Write to Edge List
+    nx.write_weighted_edgelist(G, "weighted_edge_list.txt")
+
+def toAdjMatrix(G):
     # Get adjacency matrix as a SciPy sparse matrix
-    adj_matrix_sparse = nx.adjacency_matrix(g)
+    adj_matrix_sparse = nx.adjacency_matrix(G)
 
     # Convert to a dense matrix (NumPy array)
     adj_matrix_dense = adj_matrix_sparse.todense()
@@ -39,9 +43,9 @@ def toAdjMatrix(g):
         np.savetxt(f, adj_matrix_dense, fmt='%d')
 
     
-def toJSON(g):
+def toJSON(G):
     # Convert to JSON data
-    data = json_graph.node_link_data(g)
+    data = json_graph.node_link_data(G)
     
     # Convert JSON object to a string
     json_data = json.dumps(data, indent=4)
@@ -60,7 +64,7 @@ def connSW(beta=None):
     k = 10  # Number of nearest neighbors in the ring topology
     p = 0.1 # The probability of rewiring each edge
 
-    g = nx.connected_watts_strogatz_graph(n, k, p)
+    G = nx.connected_watts_strogatz_graph(n, k, p)
 
     config = mc.Configuration()
 
@@ -69,13 +73,13 @@ def connSW(beta=None):
         weight = round(weight / 100, 2)
         if beta:
             weight = beta
-        g[a][b]['weight'] = weight
+        G[a][b]['weight'] = weight
         config.add_edge_configuration("threshold", (a, b), weight)
 
-    toJSON(g)
-    toAdjMatrix(g)
+    toJSON(G)
+    toAdjMatrix(G)
     
-    return g, config
+    return G, config
 
 def BA():
     g = nx.barabasi_albert_graph(1000, 5)
