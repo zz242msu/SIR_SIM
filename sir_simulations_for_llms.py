@@ -244,9 +244,9 @@ def run_and_save_sir_model(graph_func, graph_name, run_number, graph_args=[], be
         for iteration in iterations:
             file.write(str(iteration) + "\n")
 
-    # Update the graph with the status from the last iteration
-    for i, node_status in model.status.items():
-        G.nodes[i]['status'] = node_status
+    # # Update the graph with the status from the last iteration
+    # for i, node_status in model.status.items():
+    #     G.nodes[i]['status'] = node_status
 
     # draw graphs for all iterations
     for iteration_index, iteration in enumerate(iterations):
