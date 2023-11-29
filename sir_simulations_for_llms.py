@@ -335,5 +335,5 @@ graphs = [
 # Run and save for each graph type 20 times
 for graph_func, graph_name, graph_args in graphs:
     print('graph_args', graph_args)
-    for run_number in range(0, 1):  # Run 20 times
-        run_and_save_sir_model(graph_func, graph_name, run_number, graph_args, 0.5, 0.3, 20) # beta, gamma, steps
+    for run_number in range(0, 20):  # Run 20 times
+        run_and_save_sir_model(graph_func, graph_name, run_number, graph_args, 0.5, 0.3, 16) # beta, gamma, steps
